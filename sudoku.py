@@ -83,23 +83,64 @@ class SudokuSolver:
                 if self.board[i][j] == 0:
                     return (i, j)
 
-    def convert_zeroes_to_blanks(self, board):
+    def convert_zeroes_to_blanks(self):
         """
         Formats a board by substituting all the placeholder 0s with blank spaces
         """
+        for i in range(len(self.board)):
+            for j in range(len(self.board)):
+                if self.board[i][j] == 0:
+                    self.board[i][j] = ''
+
+        return self.board
+    
+    def convert_blanks_to_zeroes(self):
+        """
+        Formats a board by substituting the blanks with the placeholder 0s
+        """
+        for i in range(len(self.board)):
+            for j in range(len(self.board)):
+                if self.board[i][j] == '':
+                    self.board[i][j] = 0
+
+        return self.board
+    
+    def convert_to_str(self):
+        """
+        Ensures every number in the grid is converted to a string
+        """
+        for i in range(len(self.board)):
+            for j in range(len(self.board)):
+                self.board[i][j] = str(self.board[i][j])
+
+        return self.board
+    
+    def convert_to_int(self):
+        """
+        Ensures every number in the grid is converted to an integer
+        """
+        for i in range(len(self.board)):
+            for j in range(len(self.board)):
+                self.board[i][j] = int(self.board[i][j])
+
+        return self.board
+    
+    def clear_board(self, board):
+        """
+        Clears the board by converting all numbers to a blank empty string
+        """
         for i in range(len(board)):
             for j in range(len(board)):
-                if board[i][j] == 0:
-                    board[i][j] = ' '
+                board[i][j] = ''
 
         return board
     
-if __name__ == '__main__':
-    su = Solver()
-    su.print_board()
-    print('\n')
-    su.solve()
-    su.print_board()
+# if __name__ == '__main__':
+#     su = Solver()
+#     su.print_board()
+#     print('\n')
+#     su.solve()
+#     su.print_board()
 
 
 
