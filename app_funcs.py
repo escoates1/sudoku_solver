@@ -2,7 +2,7 @@ import streamlit as st
 
 column_options = st.column_config.TextColumn(label = "",
                                              max_chars=1,
-                                             validate="^[1-9]$")
+                                             validate="^[1-9]*$")
 
 column_config = {str(k): column_options for k in range(0, 9)}
 
@@ -12,9 +12,8 @@ def display_data_editor(data, st_obj):
                                    num_rows='fixed',
                                    hide_index=True,
                                    column_config=column_config,
-                                   key='empty_grid',
-                                   use_container_width=False,
-                                #    on_change=
+                                #    key='grid',
+                                   use_container_width=False
                                    )
     
     return edited_df

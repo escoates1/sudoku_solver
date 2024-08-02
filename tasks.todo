@@ -1,0 +1,4 @@
+- Make reset example get rid of ANY user inputted data
+- Test with multiple examples
+- Some form of unit testing
+- Dockerfile
