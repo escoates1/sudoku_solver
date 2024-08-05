@@ -52,6 +52,9 @@ class SudokuSolver:
                 
         # All checks passed
         return True
+    
+    def validate_final_board(self):
+        pass
 
     def print_board(self):
         """
@@ -125,15 +128,15 @@ class SudokuSolver:
 
         return self.board
     
-    def clear_board(self, board):
-        """
-        Clears the board by converting all numbers to a blank empty string
-        """
-        for i in range(len(board)):
-            for j in range(len(board)):
-                board[i][j] = ''
+    # def clear_board(self, board):
+    #     """
+    #     Clears the board by converting all numbers to a blank empty string
+    #     """
+    #     for i in range(len(board)):
+    #         for j in range(len(board)):
+    #             board[i][j] = ''
 
-        return board
+    #     return board
     
 # if __name__ == '__main__':
 #     su = Solver()

@@ -1,7 +1,8 @@
 import streamlit as st
+import uuid
 
-column_options = st.column_config.TextColumn(label = "",
-                                             max_chars=1,
+column_options = st.column_config.TextColumn(max_chars=1,
+                                             label = "",
                                              validate="^[1-9]*$")
 
 column_config = {str(k): column_options for k in range(0, 9)}
@@ -12,11 +13,30 @@ def display_data_editor(data, st_obj):
                                    num_rows='fixed',
                                    hide_index=True,
                                    column_config=column_config,
-                                #    key='grid',
+                                   key=st.session_state.grid_widget,
                                    use_container_width=False
                                    )
     
     return edited_df
+
+# def change_data_editor(test_string):
+    
+#     # edited_rows = st.session_state['grid_widget']['edited_rows']
+#     st.session_state.test = test_string
+    
+    # for row in edited_rows.keys():
+    #     for col, val in edited_rows[row].items():
+    #         grid.loc[row][col] = val
+
+    # st.session_state.test = grid
+
+    # st.session_state.test = f'[{row}][{col}] = {val}'
+
+def update_grid_widget_key():
+    """
+    Located on top of the data editor.
+    """
+    st.session_state.grid_widget = str(uuid.uuid4())
 
 def check_grid_solvable(board):
     """
@@ -31,7 +51,7 @@ def check_grid_solvable(board):
             if board[i][j] != '':
                 non_empty_count += 1
 
-    print(non_empty_count)
+    # print(non_empty_count)
 
     if non_empty_count < 17:
         return False
