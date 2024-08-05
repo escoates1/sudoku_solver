@@ -3,6 +3,7 @@ import pandas as pd
 import sudoku
 import example_board
 import uuid
+import time
 from app_funcs import display_data_editor, check_grid_solvable, update_grid_widget_key
 
 su = sudoku.SudokuSolver()
@@ -38,12 +39,12 @@ if "grid" not in st.session_state:
 if "grid_widget" not in st.session_state:
     st.session_state.grid_widget = str(uuid.uuid4())
 
-# if "test" not in st.session_state:
-#     st.session_state.test = ex_df
+if "edited_grid" not in st.session_state:
+    st.session_state.edited_grid = None
 
 # Buttons
 if left.button("Solve", on_click=update_grid_widget_key):
-    edited_df = st.session_state.grid
+    edited_df = st.session_state.edited_grid
     edited_board = edited_df.values.tolist()
 
     # Check is the grid can actually be solved before attempting
@@ -55,7 +56,7 @@ if left.button("Solve", on_click=update_grid_widget_key):
         if su.solve():
             su.convert_to_str()
             edited_df = pd.DataFrame(su.board)
-            st.write('solved.')
+            bottom.write('Solved.')
         else:
             bottom.write('No valid solution found.')
     else:
@@ -66,33 +67,19 @@ if left.button("Solve", on_click=update_grid_widget_key):
 
 if middle.button("Clear", on_click=update_grid_widget_key):
     st.session_state.grid = empty_df
-    st.write('cleared.')
+    # st.write('cleared.')
 
 if right.button('Reset', on_click=update_grid_widget_key):
     st.session_state.grid = ex_df
-    st.write('reset.')
+    # st.write('reset.')
 
 # Display the board currently stored as a session state var
 edited_df = display_data_editor(st.session_state.grid, top)
-
-# Update the grid session state with the current contents of data editor
-for k, v in st.session_state.items():
-    if 'edited_rows' in v:
-        st.write(k)
-        grid = st.session_state.grid
-        edited_values = v['edited_rows']
-
-        for row in edited_values.keys():
-            for col, val in edited_values[row].items():
-                grid.loc[row, int(col)] = val
-
-        st.session_state['grid'] = grid
-
-st.write(st.session_state)
+st.session_state.edited_grid = edited_df
 
 # Utils for dev only
-if st.button('Refresh page'):
-    for key in st.session_state.keys():
-        del st.session_state[key]
-    st.cache_data.clear()
-    st.rerun()
+# if st.button('Refresh page'):
+#     for key in st.session_state.keys():
+#         del st.session_state[key]
+#     st.cache_data.clear()
+#     st.rerun()

@@ -51,8 +51,6 @@ def check_grid_solvable(board):
             if board[i][j] != '':
                 non_empty_count += 1
 
-    # print(non_empty_count)
-
     if non_empty_count < 17:
         return False
     else:

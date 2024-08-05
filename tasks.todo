@@ -1,5 +1,6 @@
 - Create a function to valid the final solution.
-- Make reset example get rid of ANY user inputted data
+- Make reset example get rid of ANY user inputted data @done
+- Make grid session state dynamically update with cell edits @done
 - Test with multiple examples
 - Some form of unit testing
 - Dockerfile
