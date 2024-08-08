@@ -47,18 +47,25 @@ if left.button("Solve", on_click=update_grid_widget_key):
     edited_df = st.session_state.edited_grid
     edited_board = edited_df.values.tolist()
 
-    # Check is the grid can actually be solved before attempting
+    # Checks the grid has the minimum amount of starting letters to be solved
+    # Note this is for a deductive solution, rather than a brute force one
     if check_grid_solvable(edited_board):
         su.board = edited_board
         su.convert_blanks_to_zeroes()
         su.convert_to_int()
 
-        if su.solve():
-            su.convert_to_str()
-            edited_df = pd.DataFrame(su.board)
-            bottom.write('Solved.')
+        # Check that the starting board is valid before solving 
+        solvable, invalid_message = su.validate_starting_board()
+
+        if solvable:
+            if su.solve():
+                su.convert_to_str()
+                edited_df = pd.DataFrame(su.board)
+                bottom.write('Solved.')
+            else:
+                bottom.write('No valid solution found.')
         else:
-            bottom.write('No valid solution found.')
+            bottom.write(invalid_message)
     else:
         bottom.write('Sudoku cannot be solved with less than 17 numbers provided.')
 

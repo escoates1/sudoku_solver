@@ -17,7 +17,7 @@ class SudokuSolver:
             row, col = find
 
         for i in range(1, 10):
-            if self.validate(i, (row, col)):
+            if self.validate_number(i, (row, col)):
                 self.board[row][col] = i
 
                 if self.solve():
@@ -27,7 +27,7 @@ class SudokuSolver:
 
         return False
 
-    def validate(self, num, pos):
+    def validate_number(self, num, pos):
         """
         
         """
@@ -53,8 +53,75 @@ class SudokuSolver:
         # All checks passed
         return True
     
-    def validate_final_board(self):
-        pass
+    def validate_starting_board(self):
+        """
+        Backtracking algorithm does not validate numbers that have already been placed
+        in the board, therefore this function assesses that the starting board is valid
+        before attempting to solve it.
+
+        Returns:
+        A tuple consisting of two elements -
+            [0] - bool: True if valid, False if invalid.
+            [1] - string: Contains the error message for why the board is invalid.
+        """
+        board = self.board
+            
+        # Validate row
+        for row in range(len(board)):
+            tracker = []
+            for num in board[row]:
+                if num in tracker and num != 0:
+                    message = f"{num} appeared more than once in row {row+1}."
+                    return (False, message)
+                else:
+                    tracker.append(num)
+
+        # Validate column
+        for col in range(len(board[0])):
+            tracker = []
+
+            for row in range(len(board)):
+                num = board[row][col]
+
+                if num in tracker and num != 0:
+                    message = f"{num} appeared more than once in column {col+1}."
+                    return (False, message)
+                else:
+                    tracker.append(num)
+
+        # Validate box
+        box_count = len(board) // 3
+
+        # Get a coordinate (x,y) for top-left number in each sub box
+        for x in range(box_count):
+            for y in range(box_count):
+
+                # Narrow down the rows contained in each box
+                rows = board[x*3: x*3 + 3]
+
+                # Iterate through those rows from starting y co-ord to final y co-ord
+                val_store = []
+                for row in rows:
+                    vals = row[y*3: y*3 + 3]
+                    val_store.append(vals)
+
+                # Flatten the resulting list of lists
+                box_values = []
+                for val_list in val_store:
+                    box_values.extend(val_list)
+
+                # Check each box, represented by a single list
+                tracker = []
+
+                for val in box_values:
+                    if val in tracker and val != 0:
+                        message = f"{val} appeared more than once in box {(x, y)}."
+                        return (False, message)
+                    else:
+                        tracker.append(val)
+
+        # If all checks pass
+        return (True, None)
 
     def print_board(self):
         """
