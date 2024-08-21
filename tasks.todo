@@ -3,4 +3,6 @@
 - Make grid session state dynamically update with cell edits @done
 - Test with multiple examples
 - Some form of unit testing
+- Add docstrings 
+- Cleanup/refactor code
 - Dockerfile

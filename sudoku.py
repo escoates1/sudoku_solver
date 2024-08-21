@@ -194,17 +194,7 @@ class SudokuSolver:
                 self.board[i][j] = int(self.board[i][j])
 
         return self.board
-    
-    # def clear_board(self, board):
-    #     """
-    #     Clears the board by converting all numbers to a blank empty string
-    #     """
-    #     for i in range(len(board)):
-    #         for j in range(len(board)):
-    #             board[i][j] = ''
-
-    #     return board
-    
+        
 # if __name__ == '__main__':
 #     su = Solver()
 #     su.print_board()
