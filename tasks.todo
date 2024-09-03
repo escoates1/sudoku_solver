@@ -5,4 +5,5 @@
 - Some form of unit testing
 - Add docstrings 
 - Cleanup/refactor code
-- Dockerfile
+- Dockerfile @done
+- Deploy container on Azure

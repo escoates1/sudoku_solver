@@ -1,2 +1,2 @@
 # sudoku_solver
-Finds solution to Sudoku puzzles
+Streamlit app that solves Sudoku puzzles.
