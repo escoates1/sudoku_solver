@@ -6,9 +6,13 @@ class SudokuSolver:
         self.board = board
 
     def solve(self):
+        """Solves the sudoku puzzle recursively.
+
+        Returns:
+            bool: True if solvable, False if not
         """
 
-        """
+        # Tuple containing co-ordinates of an empty cell
         find = self.find_empty() 
 
         if not find:
@@ -18,21 +22,35 @@ class SudokuSolver:
 
         for i in range(1, 10):
             if self.validate_number(i, (row, col)):
+                # Insert a number into cell if it does not break Sudoku rules
                 self.board[row][col] = i
 
+                # Recursively call function until no more empty cells found
                 if self.solve():
                     return True
                 
+                # Reset the last cell to 0 as no solution found, then continue
+                # loop to try with the next value
                 self.board[row][col] = 0
 
         return False
 
     def validate_number(self, num, pos):
-        """
-        
+        """Validates whether a given number inserted into a cell in the board
+        specified by a (row number, column number) co-ordinate. 
+
+        3 checks required due to rules of Sudoku:
+        - Each number only appears once in each row.
+        - Each number only appears once in each column.
+        - Each number only appears once in each sub-grid (3x3 cells).
+
+        Returns:
+            bool: True if all checks pass, False if any fail.
         """
         # Check row
         for i in range(len(self.board[0])):
+            # Check each cell in a row for the number, except for in
+            # the location where we are attempting to place it.
             if self.board[pos[0]][i] == num and i != pos[1]:
                 return False
             
@@ -125,7 +143,8 @@ class SudokuSolver:
 
     def print_board(self):
         """
-
+        Utility function to display a board in the terminal.
+        Not used in Streamlit application.
         """
         # Create copy of variable so don't change self.board itself
         temp_board = copy.deepcopy(self.board)
@@ -145,8 +164,10 @@ class SudokuSolver:
                     print(str(board[i][j]) + " ", end = "")
 
     def find_empty(self):
-        """
-
+        """Iterates through board to find an empty cell.
+        
+        Returns:
+            tuple: i, j co-ordinates of the empty cell.
         """
         for i in range(len(self.board)):
             for j in range(len(self.board)):
@@ -154,9 +175,9 @@ class SudokuSolver:
                     return (i, j)
 
     def convert_zeroes_to_blanks(self):
-        """
-        Formats a board by substituting all the placeholder 0s with blank spaces
-        """
+        """Formats the board by substituting all the placeholder 0s with 
+        blank spaces. When displaying the board to a user, want empty cells
+        to be displayed."""
         for i in range(len(self.board)):
             for j in range(len(self.board)):
                 if self.board[i][j] == 0:
@@ -165,9 +186,7 @@ class SudokuSolver:
         return self.board
     
     def convert_blanks_to_zeroes(self):
-        """
-        Formats a board by substituting the blanks with the placeholder 0s
-        """
+        """Formats the board by substituting the blanks with placeholder 0s."""
         for i in range(len(self.board)):
             for j in range(len(self.board)):
                 if self.board[i][j] == '':
@@ -176,9 +195,7 @@ class SudokuSolver:
         return self.board
     
     def convert_to_str(self):
-        """
-        Ensures every number in the grid is converted to a string
-        """
+        """Ensures every number in the grid is converted to a string."""
         for i in range(len(self.board)):
             for j in range(len(self.board)):
                 self.board[i][j] = str(self.board[i][j])
@@ -186,21 +203,12 @@ class SudokuSolver:
         return self.board
     
     def convert_to_int(self):
-        """
-        Ensures every number in the grid is converted to an integer
-        """
+        """Ensures every number in the grid is converted to an integer."""
         for i in range(len(self.board)):
             for j in range(len(self.board)):
                 self.board[i][j] = int(self.board[i][j])
 
         return self.board
-        
-# if __name__ == '__main__':
-#     su = Solver()
-#     su.print_board()
-#     print('\n')
-#     su.solve()
-#     su.print_board()
 
 
 

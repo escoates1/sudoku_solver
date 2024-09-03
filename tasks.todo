@@ -1,9 +1,11 @@
 - Create a function to valid the final solution. @done
 - Make reset example get rid of ANY user inputted data @done
 - Make grid session state dynamically update with cell edits @done
-- Test with multiple examples
+- Test with multiple examples @done
 - Some form of unit testing
 - Add docstrings 
 - Cleanup/refactor code
+    - Install a linting tool
+    - Use linting tool
 - Dockerfile @done
 - Deploy container on Azure

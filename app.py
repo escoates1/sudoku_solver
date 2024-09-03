@@ -3,7 +3,6 @@ import pandas as pd
 import sudoku
 import example_board
 import uuid
-import time
 from app_funcs import display_data_editor, check_grid_solvable, update_grid_widget_key
 
 su = sudoku.SudokuSolver()
@@ -74,19 +73,10 @@ if left.button("Solve", on_click=update_grid_widget_key):
 
 if middle.button("Clear", on_click=update_grid_widget_key):
     st.session_state.grid = empty_df
-    # st.write('cleared.')
 
 if right.button('Reset', on_click=update_grid_widget_key):
     st.session_state.grid = ex_df
-    # st.write('reset.')
 
 # Display the board currently stored as a session state var
 edited_df = display_data_editor(st.session_state.grid, top)
 st.session_state.edited_grid = edited_df
-
-# Utils for dev only
-# if st.button('Refresh page'):
-#     for key in st.session_state.keys():
-#         del st.session_state[key]
-#     st.cache_data.clear()
-#     st.rerun()
