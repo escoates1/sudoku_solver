@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import sudoku
-import example_board
+import example_boards
 import uuid
 from app_funcs import display_data_editor, check_grid_solvable, update_grid_widget_key
 
@@ -11,7 +11,7 @@ board = su.convert_zeroes_to_blanks()
 board = su.convert_to_str()
 
 # Dataframe populated with example board, used for resets
-ex_df = pd.DataFrame(example_board.board)
+ex_df = pd.DataFrame(example_boards.board)
 
 # Dataframe holding current status of edited df
 df = pd.DataFrame(board)
