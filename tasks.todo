@@ -3,8 +3,12 @@
 - Make grid session state dynamically update with cell edits @done
 - Test with multiple examples @done
 - Some form of unit testing
-- Add docstrings 
-- Cleanup/refactor code
+    - solve @done
+    - validate_number
+    - validate_starting_board
+    - find_empty
+- Add docstrings @done
+- Cleanup/refactor code @done
     - Install a linting tool
     - Use linting tool
 - Dockerfile @done

@@ -1,8 +1,8 @@
-import example_board
+import example_boards
 import copy
 
 class SudokuSolver:
-    def __init__(self, board = example_board.board):
+    def __init__(self, board = example_boards.board):
         self.board = board
 
     def solve(self):
