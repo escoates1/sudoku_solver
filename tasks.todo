@@ -4,8 +4,8 @@
 - Test with multiple examples @done
 - Some form of unit testing
     - solve @done
-    - validate_number
-    - validate_starting_board
+    - validate_number @done
+    - validate_starting_board @done
     - find_empty
 - Add docstrings @done
 - Cleanup/refactor code @done
