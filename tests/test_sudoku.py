@@ -1,32 +1,50 @@
 import pytest
 import sudoku
+import logging
 import example_boards as ex
+import time
+
+# Create logger
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Create a file handler that overwrites
+file_handler = logging.FileHandler('tests/test_sudoku.log', mode='w')
+file_handler.setLevel(logging.INFO)
+
+# Add handler to the logger
+logger.addHandler(file_handler)
 
 # Set up object instances to be inherited by each testing class
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def solvable():
     # A valid, solvable board
-    return sudoku.SudokuSolver(ex.board)
+    obj = sudoku.SudokuSolver(ex.board)
+    logger.info(f'Creating solvable instance @ {time.time()}: {obj.board}')
+    yield obj
+    logger.info(f'Tearing down solvable instance @ {time.time()}: {obj.board}')
+    del obj
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def unsolvable():
     # A valid starting board that cannot be solved
     return sudoku.SudokuSolver(ex.unsolvable_board)
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def incorrect():
     # An invalid starting board, breaks sudoku rules
     return sudoku.SudokuSolver(ex.incorrect_board)
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def solved():
     # An already solved board
     return sudoku.SudokuSolver(ex.solved_board)
 
-@pytest.mark.usefixtures("solvable","unsolvable")
+# @pytest.mark.usefixtures("solvable","unsolvable")
 class TestSolvable:
     def test_solvable(self, solvable):
         res = solvable.solve()
+        logger.info(f'{self.__class__.__name__}:\n{solvable.board}')
 
         assert res == True
 
@@ -35,7 +53,7 @@ class TestSolvable:
 
         assert res == False
 
-@pytest.mark.usefixtures("solvable")
+# @pytest.mark.usefixtures("solvable")
 class TestValidateNumber:
     def test_valid_row_insertion(self, solvable):
         num = 5
@@ -81,7 +99,7 @@ class TestValidateNumber:
 
         assert res == False
 
-@pytest.mark.usefixtures("solvable","incorrect")
+# @pytest.mark.usefixtures("solvable","incorrect")
 class TestValidateStartingBoard:
     def test_correct_starting_board(self, solvable):
         res = solvable.validate_starting_board()
@@ -93,10 +111,11 @@ class TestValidateStartingBoard:
 
         assert res[0] == False
 
-@pytest.mark.usefixtures("solvable","solved","unsolvable")
+# @pytest.mark.usefixtures("solvable","unsolvable","solved")
 class TestFindEmpty:
     def test_find_empty_1(self, solvable):
         res = solvable.find_empty()
+        logger.info(f'{self.__class__.__name__}:\n{solvable.board}')
 
         assert res == (0, 2)
 

@@ -3,6 +3,7 @@ import pandas as pd
 import sudoku
 import example_boards
 import uuid
+import app_text
 from app_funcs import display_data_editor, check_grid_solvable, update_grid_widget_key
 
 su = sudoku.SudokuSolver()
@@ -20,8 +21,9 @@ df = pd.DataFrame(board)
 empty_df = pd.DataFrame([['' for i in range(9)] for j in range(9)])
 
 # Configuring page layout
-top = st.container(height = 375, border=False)
-bottom = st.container(height = 100, border=False)
+heading = st.container(height=180, border=False)
+top = st.container(height=375, border=False)
+bottom = st.container(height=100, border=False)
 
 cols = bottom.columns(5,
                       gap='small',
@@ -30,6 +32,11 @@ cols = bottom.columns(5,
 left = cols[0]
 middle = cols[1]
 right = cols[2]
+
+# Page heading and description
+heading.title('Sudoku Solver')
+heading.markdown(app_text.USE_INSTRUCTIONS)
+heading.markdown(app_text.DISCLAIMER)
 
 # Initialise session state var
 if "grid" not in st.session_state:

@@ -2,14 +2,16 @@
 - Make reset example get rid of ANY user inputted data @done
 - Make grid session state dynamically update with cell edits @done
 - Test with multiple examples @done
-- Some form of unit testing
+- Some form of unit testing @done
     - solve @done
     - validate_number @done
     - validate_starting_board @done
-    - find_empty
+    - find_empty @done
 - Add docstrings @done
 - Cleanup/refactor code @done
-    - Install a linting tool
+- Install a linting tool
     - Use linting tool
 - Dockerfile @done
 - Deploy container on Azure
+- Update app heading and description @done
+- Investigate flaky test
