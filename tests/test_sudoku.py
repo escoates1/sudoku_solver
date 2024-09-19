@@ -3,6 +3,7 @@ import sudoku
 import logging
 import example_boards as ex
 import time
+import copy
 
 # Create logger
 logger = logging.getLogger(__name__)
@@ -19,32 +20,37 @@ logger.addHandler(file_handler)
 @pytest.fixture(scope='function')
 def solvable():
     # A valid, solvable board
-    obj = sudoku.SudokuSolver(ex.board)
-    logger.info(f'Creating solvable instance @ {time.time()}: {obj.board}')
+    obj = copy.deepcopy(sudoku.SudokuSolver(ex.board))
+    logger.info(f'Creating {solvable.__name__} object.\nInitial board: {obj.board}\n')
     yield obj
-    logger.info(f'Tearing down solvable instance @ {time.time()}: {obj.board}')
-    del obj
 
 @pytest.fixture(scope='function')
 def unsolvable():
     # A valid starting board that cannot be solved
-    return sudoku.SudokuSolver(ex.unsolvable_board)
+    obj = copy.deepcopy(sudoku.SudokuSolver(ex.unsolvable_board))
+    logger.info(f'Creating {unsolvable.__name__} object.\nBoard: {obj.board}\n')
+
+    yield obj
 
 @pytest.fixture(scope='function')
 def incorrect():
     # An invalid starting board, breaks sudoku rules
-    return sudoku.SudokuSolver(ex.incorrect_board)
+    obj = copy.deepcopy(sudoku.SudokuSolver(ex.incorrect_board))
+    logger.info(f'Creating {incorrect.__name__} object.\nBoard: {obj.board}\n')
+
+    yield obj
 
 @pytest.fixture(scope='function')
 def solved():
     # An already solved board
-    return sudoku.SudokuSolver(ex.solved_board)
+    obj = copy.deepcopy(sudoku.SudokuSolver(ex.solved_board))
+    logger.info(f'Creating {solved.__name__} object.\nBoard: {obj.board}\n')
 
-# @pytest.mark.usefixtures("solvable","unsolvable")
+    yield obj
+
 class TestSolvable:
     def test_solvable(self, solvable):
         res = solvable.solve()
-        logger.info(f'{self.__class__.__name__}:\n{solvable.board}')
 
         assert res == True
 
@@ -53,7 +59,6 @@ class TestSolvable:
 
         assert res == False
 
-# @pytest.mark.usefixtures("solvable")
 class TestValidateNumber:
     def test_valid_row_insertion(self, solvable):
         num = 5
@@ -99,7 +104,6 @@ class TestValidateNumber:
 
         assert res == False
 
-# @pytest.mark.usefixtures("solvable","incorrect")
 class TestValidateStartingBoard:
     def test_correct_starting_board(self, solvable):
         res = solvable.validate_starting_board()
@@ -111,11 +115,9 @@ class TestValidateStartingBoard:
 
         assert res[0] == False
 
-# @pytest.mark.usefixtures("solvable","unsolvable","solved")
 class TestFindEmpty:
     def test_find_empty_1(self, solvable):
         res = solvable.find_empty()
-        logger.info(f'{self.__class__.__name__}:\n{solvable.board}')
 
         assert res == (0, 2)
 

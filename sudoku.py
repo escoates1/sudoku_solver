@@ -1,5 +1,6 @@
 import example_boards
 import copy
+import sys
 
 class SudokuSolver:
     def __init__(self, board = example_boards.board):
@@ -147,9 +148,15 @@ class SudokuSolver:
         Not used in Streamlit application.
         """
         # Create copy of variable so don't change self.board itself
-        temp_board = copy.deepcopy(self.board)
-        board = self.convert_zeroes_to_blanks(temp_board)
+        board = copy.deepcopy(self.board)
 
+        # Replace 0s with blanks for presentation
+        for i in range(len(board)):
+            for j in range(len(board)):
+                if board[i][j] == 0:
+                    board[i][j] = ' '
+        
+        # Display board
         for i in range(len(board)):
             if i % 3 == 0 and i != 0:
                 print("- - - - - - - - - - - -")
