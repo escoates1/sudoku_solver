@@ -9,9 +9,7 @@
     - find_empty @done
 - Add docstrings @done
 - Cleanup/refactor code @done
-- Install a linting tool
-    - Use linting tool
 - Dockerfile @done
 - Deploy container on Azure
 - Update app heading and description @done
-- Investigate flaky test
+- Investigate flaky test @done
