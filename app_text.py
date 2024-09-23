@@ -1,7 +1,7 @@
 USE_INSTRUCTIONS = """
 
 **Instructions:** Type numbers directly into the grid and use the buttons to
-solve the puzzle. Tip - paste in numbers from a table to speed up data entry.
+solve the puzzle. Tip - paste in numbers from a spreadsheet to speed up data entry.
 
 """
 
